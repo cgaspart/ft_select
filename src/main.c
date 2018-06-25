@@ -17,7 +17,8 @@ int		main(int argc, char **argv)
 	init_terminal_data();
 	if (!get_items(argc, argv))
 		ft_putstr("NO ITEMS");
-	sleep(2);
+	print_items();
+	voir_touche();
 	term_back();
 	return (1);
 }

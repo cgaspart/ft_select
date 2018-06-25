@@ -17,6 +17,7 @@
 # include <termcap.h>
 # include <term.h>
 # include <termios.h>
+# include <sys/ioctl.h>
 
 typedef struct		s_select
 {
@@ -39,6 +40,9 @@ char			*BC;  /* For tgoto.  */
 char			*UP;
 char			*buffer;
 int				init_terminal_data(void);
+int  			my_outc(int c);
 int				get_items(int argc, char **argv);
 int				term_back(void);
+void			print_items();
+int				voir_touche();
 #endif
