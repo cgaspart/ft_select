@@ -30,19 +30,13 @@ typedef struct		s_select
 }					t_select;
 
 t_select		*g_select;
-char			*cl_string;
-char			*cm_string;
-int				height;
-int				width;
-int				auto_wrap;
-char			PC;   /* For tputs.  */
-char			*BC;  /* For tgoto.  */
-char			*UP;
-char			*buffer;
 int				init_terminal_data(void);
 int  			my_outc(int c);
 int				get_items(int argc, char **argv);
 int				term_back(void);
-void			print_items();
+int				print_items();
 int				voir_touche();
+void			ft_ul(char *str);
+void			ft_clear(void);
+int				max_item_len();
 #endif

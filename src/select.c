@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   select.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgaspart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/19 14:13:23 by cgaspart          #+#    #+#             */
-/*   Updated: 2018/06/19 14:15:09 by cgaspart         ###   ########.fr       */
+/*   Created: 2018/06/27 18:31:01 by cgaspart          #+#    #+#             */
+/*   Updated: 2018/06/27 18:31:03 by cgaspart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		main(int argc, char **argv)
+void	selector(int pos)
 {
-	init_terminal_data();
-	if (get_items(argc, argv))
-	{
-		print_items();
-		voir_touche();
-	}
-	else
-		ft_putstr("NO ITEMS");
-	term_back();
-	return (1);
+	
 }

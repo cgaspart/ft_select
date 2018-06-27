@@ -12,7 +12,7 @@
 
 #include "ft_select.h"
 
-int		total_len()
+int		max_item_len()
 {
 	int res;
 	int i;
@@ -21,34 +21,28 @@ int		total_len()
 	res = 0;
 	while (g_select->items[i])
 	{
-		res += ft_strlen(g_select->items[i]);
+		if (res < (int)ft_strlen(g_select->items[i]))
+			res = ft_strlen(g_select->items[i]);
 		i++;
 	}
-	res += g_select->n_items;
-	return (res - 1);
+	return (res);
 }
 
-void	print_items()
+int		print_items()
 {
 	int i;
 	char *res;
 
 	i = 0;
-	if ((res = tgetstr("cl", NULL)) == NULL)
-		return ;
-	tputs(res, 0, my_outc);
+	ft_clear();
 	while (g_select->items[i])
 	{
 		ioctl(2, TIOCGWINSZ, &g_select->win);
 		if (i == g_select->pos)
-		{
-			tputs(tgetstr("us", NULL), 1, my_outc);
-			ft_putstr(g_select->items[i]);
-			tputs(tgetstr("ue", NULL), 1, my_outc);
-		}
+			ft_ul(g_select->items[i]);
 		else
 			ft_putstr(g_select->items[i]);
-		if (g_select->win.ws_row < total_len())
+		if (g_select->win.ws_row < max_item_len())
 		{
 			tputs(res, 0, my_outc);
 			ft_putchar('\n');
@@ -57,6 +51,7 @@ void	print_items()
 			ft_putchar(' ');
 		i++;
 	}
+	return (1);
 }
 
 int		get_items(int argc, char **argv)

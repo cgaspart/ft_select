@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_clear.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgaspart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/19 14:13:23 by cgaspart          #+#    #+#             */
-/*   Updated: 2018/06/19 14:15:09 by cgaspart         ###   ########.fr       */
+/*   Created: 2018/06/26 09:57:59 by cgaspart          #+#    #+#             */
+/*   Updated: 2018/06/26 09:58:01 by cgaspart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		main(int argc, char **argv)
+void	ft_clear(void)
 {
-	init_terminal_data();
-	if (get_items(argc, argv))
-	{
-		print_items();
-		voir_touche();
-	}
-	else
-		ft_putstr("NO ITEMS");
-	term_back();
-	return (1);
+	char *res;
+
+	if ((res = tgetstr("cl", NULL)) == NULL)
+		return ;
+	tputs(res, 0, my_outc);
+}
+
+void	ft_ul(char *str)
+{
+	tputs(tgetstr("us", NULL), 1, my_outc);
+	ft_putstr(str);
+	tputs(tgetstr("ue", NULL), 1, my_outc);
 }
