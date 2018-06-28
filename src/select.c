@@ -12,7 +12,22 @@
 
 #include "ft_select.h"
 
-void	selector(int pos)
+static void		malloc_tab(void)
 {
-	
+	int i;
+
+	i = 0;
+	g_select->selected = malloc(sizeof(int) * g_select->n_items);
+	while (i < g_select->n_items)
+	{
+		g_select->selected[i] = 0;
+		i++;
+	}
+}
+
+void			selector(int pos)
+{
+	if (g_select->selected == NULL)
+		malloc_tab();
+	g_select->selected[pos] = !g_select->selected[pos];
 }

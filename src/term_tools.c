@@ -21,9 +21,25 @@ void	ft_clear(void)
 	tputs(res, 0, my_outc);
 }
 
+void	ft_ul_video(char *str)
+{
+	tputs(tgetstr("us", NULL), 1, my_outc);
+	tputs(tgetstr("mr", NULL), 1, my_outc);
+	ft_putstr(str);
+	tputs(tgetstr("me", NULL), 1, my_outc);
+	tputs(tgetstr("ue", NULL), 1, my_outc);
+}
+
 void	ft_ul(char *str)
 {
 	tputs(tgetstr("us", NULL), 1, my_outc);
 	ft_putstr(str);
 	tputs(tgetstr("ue", NULL), 1, my_outc);
+}
+
+void	ft_video(char *str)
+{
+	tputs(tgetstr("mr", NULL), 1, my_outc);
+	ft_putstr(str);
+	tputs(tgetstr("me", NULL), 1, my_outc);
 }

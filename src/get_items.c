@@ -31,25 +31,41 @@ int		max_item_len()
 int		print_items()
 {
 	int i;
-	char *res;
 
 	i = 0;
 	ft_clear();
 	while (g_select->items[i])
 	{
 		ioctl(2, TIOCGWINSZ, &g_select->win);
-		if (i == g_select->pos)
+		if (g_select->selected != NULL && g_select->selected[i] == 1)
+		{
+			if (i == g_select->pos)
+				ft_ul_video(g_select->items[i]);
+			else
+				ft_video(g_select->items[i]);
+		}
+		else if (i == g_select->pos)
 			ft_ul(g_select->items[i]);
 		else
 			ft_putstr(g_select->items[i]);
-		if (g_select->win.ws_row < max_item_len())
-		{
-			tputs(res, 0, my_outc);
-			ft_putchar('\n');
-		}
-		else
-			ft_putchar(' ');
+		ft_putchar(' ');
 		i++;
+	}
+	i = 0;
+	ft_putstr("\n\n\n n_items : ");
+	ft_putnbr(g_select->n_items);
+	ft_putstr("\n My pos : ");
+	ft_putnbr(g_select->pos);
+	ft_putstr("\n My select tab : ");
+	if (g_select->selected != NULL)
+	{
+		while (i < g_select->n_items)
+		{
+			ft_putstr("| ");
+			ft_putnbr(g_select->selected[i]);
+			ft_putchar(' ');
+			i++;
+		}
 	}
 	return (1);
 }

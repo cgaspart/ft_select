@@ -65,26 +65,23 @@ int     voir_touche()
 
 	while (1)
 	{
+		print_items();
 		read(1, buffer, 3);
-		ft_putnbr(buffer[0]);
-		ft_putchar('\n');
-		ft_putnbr(buffer[1]);
-		ft_putchar('\n');
-		ft_putnbr(buffer[2]);
-		ft_putchar('\n');
-		if ((buffer[0] == 27 && buffer[2] == 68) && g_select->pos > 0)
-			g_select->pos--;
-		if ((buffer[0] == 27 && buffer[2] == 67) && g_select->pos <
-		g_select->n_items - 1)
-			g_select->pos++;
-		if (buffer[0] == 32 && buffer[2] == 67)
+		if (buffer[0] == 32)
 			selector(g_select->pos);
+		if (buffer[0] == 27 && buffer[2] == 68)
+			g_select->pos--;
+		if (buffer[0] == 27 && buffer[2] == 67)
+			g_select->pos++;
+		if (g_select->pos == -1)
+			g_select->pos = g_select->n_items - 1;
+		if (g_select->pos == g_select->n_items)
+			g_select->pos = 0;
 		if (buffer[0] == 4 && buffer[1] == 91)
 		{
 			term_back();
 			return (1);
 		}
-		//print_items();
 	}
 	return (0);
 }

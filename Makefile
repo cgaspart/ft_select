@@ -21,7 +21,8 @@ CC = clang
 SRC_NAME =	main.c\
 			init_terminal.c\
 			get_items.c\
-			term_tools.c
+			term_tools.c\
+			select.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))

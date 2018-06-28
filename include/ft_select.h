@@ -37,6 +37,9 @@ int				term_back(void);
 int				print_items();
 int				voir_touche();
 void			ft_ul(char *str);
+void			ft_video(char *str);
+void			ft_ul_video(char *str);
 void			ft_clear(void);
 int				max_item_len();
+void			selector(int pos);
 #endif
