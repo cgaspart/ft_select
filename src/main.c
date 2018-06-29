@@ -14,11 +14,13 @@
 
 int		main(int argc, char **argv)
 {
-	init_terminal_data();
-	if (get_items(argc, argv))
-		voir_touche();
-	else
-		ft_putstr("NO ITEMS");
+	if (init_terminal_data())
+	{
+		if (get_items(argc, argv))
+			key_reader();
+		else
+			ft_putstr("NO ITEMS");
+	}
 	term_back();
 	return (1);
 }

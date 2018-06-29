@@ -12,12 +12,6 @@
 
 #include "ft_select.h"
 
-int  my_outc(int c)
-{
-	ft_putchar((char)c);
-	return (1);
-}
-
 int term_back()
 {
 	tputs(tgetstr("ve", NULL), 1, my_outc);
@@ -57,31 +51,4 @@ int		init_terminal_data()
 		return (-1);
 	set_terminal();
 	return (1);
-}
-
-int     voir_touche()
-{
-	char     buffer[3];
-
-	while (1)
-	{
-		print_items();
-		read(1, buffer, 3);
-		if (buffer[0] == 32)
-			selector(g_select->pos);
-		if (buffer[0] == 27 && buffer[2] == 68)
-			g_select->pos--;
-		if (buffer[0] == 27 && buffer[2] == 67)
-			g_select->pos++;
-		if (g_select->pos == -1)
-			g_select->pos = g_select->n_items - 1;
-		if (g_select->pos == g_select->n_items)
-			g_select->pos = 0;
-		if (buffer[0] == 4 && buffer[1] == 91)
-		{
-			term_back();
-			return (1);
-		}
-	}
-	return (0);
 }

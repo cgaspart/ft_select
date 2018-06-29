@@ -12,6 +12,12 @@
 
 #include "ft_select.h"
 
+int  my_outc(int c)
+{
+	ft_putchar((char)c);
+	return (1);
+}
+
 void	ft_clear(void)
 {
 	char *res;

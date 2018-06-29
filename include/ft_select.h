@@ -35,7 +35,7 @@ int  			my_outc(int c);
 int				get_items(int argc, char **argv);
 int				term_back(void);
 int				print_items();
-int				voir_touche();
+int				key_reader();
 void			ft_ul(char *str);
 void			ft_video(char *str);
 void			ft_ul_video(char *str);
