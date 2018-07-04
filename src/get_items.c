@@ -52,11 +52,6 @@ int		print_items()
 		i++;
 	}
 	i = 0;
-	ft_putstr("\n\n\n n_items : ");
-	ft_putnbr(g_select->n_items);
-	ft_putstr("\n My pos : ");
-	ft_putnbr(g_select->pos);
-	ft_putstr("\n My select tab : ");
 	if (g_select->selected != NULL)
 	{
 		while (i < g_select->n_items)

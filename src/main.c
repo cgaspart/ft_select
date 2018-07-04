@@ -14,13 +14,18 @@
 
 int		main(int argc, char **argv)
 {
+	int no_items;
+
+	no_items = 0;
 	if (init_terminal_data())
 	{
 		if (get_items(argc, argv))
 			key_reader();
 		else
-			ft_putstr("NO ITEMS");
+			no_items++;
 	}
 	term_back();
+	if (no_items)
+		ft_putstr("NO ITEMS");
 	return (1);
 }
