@@ -15,15 +15,15 @@
 int		key_reader(t_env *env)
 {
 	char		buffer[3];
+	t_key		*key_ptr;
 
-	init_key_func(env);
+	key_ptr = init_key_func();
 	while (1)
 	{
-		print_items();
+		print_items(env);
 		read(1, buffer, 3);
-		//if (((env->key_function)[(int)buffer[0]])
-		//(((buffer[0] == 4) ? (int)buffer[1] : (int)buffer[2]), env))
-		if (env->key_function[(int)buffer[0]]((int)buffer[2], env))
+		if (((key_ptr->key_function)[(int)buffer[0]])
+		(((buffer[0] == 4) ? (int)buffer[1] : (int)buffer[2]), env))
 			return (1);
 		if (env->pos == -1)
 				env->pos = env->n_items - 1;

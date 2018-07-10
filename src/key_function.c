@@ -56,19 +56,22 @@ int		other_key(int buffer2, t_env *env)
 	return (0);
 }
 
-void		init_key_func(t_env *env)
+t_key		*init_key_func(void)
 {
 	int		i;
+	t_key		*key_ptr;
 
 	i = 0;
+	key_ptr = (t_key*)malloc(sizeof(t_key));
 	while (i < 128)
 	{
-		env->key_function[i] = &other_key;
+		key_ptr->key_function[i] = &other_key;
 		i++;
 	}
-	env->key_function[32] = &space_key;
-	env->key_function[27] = &arrow_key;
-	env->key_function[4] = &ctrld;
-	env->key_function[127] = &del_key;
-	env->key_function[126] = &del_key;
+	key_ptr->key_function[32] = &space_key;
+	key_ptr->key_function[27] = &arrow_key;
+	key_ptr->key_function[4] = &ctrld;
+	key_ptr->key_function[127] = &del_key;
+	key_ptr->key_function[126] = &del_key;
+	return (key_ptr);
 }

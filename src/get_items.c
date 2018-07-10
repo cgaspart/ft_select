@@ -38,11 +38,13 @@ int		print_items(t_env *env)
 	item_ptr = env->items;
 	while (item_ptr)
 	{
-		if (i == env->pos)
+		if (i == env->pos && item_ptr->selected)
 			ft_ul(item_ptr->name);
-		else
+		if (item_ptr->selected)
+			ft
 			ft_putstr(item_ptr->name);
 		item_ptr = item_ptr->next;
+		i++;
 	}
 	return (1);
 }
