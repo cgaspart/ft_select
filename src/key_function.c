@@ -12,50 +12,56 @@
 
 #include "ft_select.h"
 
-int		space_key(int buffer2)
+int		space_key(int buffer2, t_env *env)
 {
-	(void)buffer2;
-	selector(g_select->pos);
-	return (0);
-}
-
-int		arrow_key(int buffer2)
-{
-	if (buffer2 == 67)
-		g_select->pos++;
-	if (buffer2 == 68)
-		g_select->pos--;
-	if (g_select->pos == -1)
-		g_select->pos = g_select->n_items - 1;
-	if (g_select->pos == g_select->n_items)
-		g_select->pos = 0;
-	return (0);
-}
-
-int		ctrld(int buffer2)
-{
-	if (buffer2 == 91)
-	{
-		term_back();
-		return (1);
-	}
-	return (0);
-}
-
-int		other_key(int buffer2)
-{
-	(void)buffer2;
-	return (0);
-}
-
-t_env		*init_key_func(void)
-{
-	int		i;
-	t_env		*env;
-	env = malloc(sizeof(t_env));
+	t_select		*item_ptr;
+	int i;
 
 	i = 0;
-	while (i < 32)
+	ft_putstr("YO");
+	(void)buffer2;
+	item_ptr = env->items;
+	while (++i < env->pos)
+		item_ptr = item_ptr->next;
+	item_ptr->selected = !item_ptr->selected;
+	env->pos++;
+	return (0);
+}
+
+int		arrow_key(int buffer2, t_env *env)
+{
+	if (buffer2 == 67)
+		env->pos++;
+	if (buffer2 == 68)
+		env->pos--;
+	return (0);
+}
+
+int		ctrld(int buffer2, t_env *env)
+{
+	/*if (buffer2 == 91)
+	{*/
+		(void)buffer2;
+		free_env(env);
+		term_back(env->term);
+		return (1);
+	//}
+	return (0);
+}
+
+int		other_key(int buffer2, t_env *env)
+{
+	(void)buffer2;
+	(void)env;
+	return (0);
+}
+
+void		init_key_func(t_env *env)
+{
+	int		i;
+
+	i = 0;
+	while (i < 128)
 	{
 		env->key_function[i] = &other_key;
 		i++;
@@ -63,5 +69,6 @@ t_env		*init_key_func(void)
 	env->key_function[32] = &space_key;
 	env->key_function[27] = &arrow_key;
 	env->key_function[4] = &ctrld;
-	return (env);
+	env->key_function[127] = &del_key;
+	env->key_function[126] = &del_key;
 }

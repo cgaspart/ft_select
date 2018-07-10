@@ -12,43 +12,42 @@
 
 #include "ft_select.h"
 
-int term_back()
+int			term_back(struct termios term)
 {
 	tputs(tgetstr("ve", NULL), 1, my_outc);
 	tputs(tgetstr("te", NULL), 1, my_outc);
-	g_select->term.c_lflag |= (ICANON | ECHO);
-	if ((tcsetattr(2, TCSANOW, &g_select->term)) == -1)
+	term.c_lflag |= (ICANON | ECHO);
+	if ((tcsetattr(2, TCSANOW, &term)) == -1)
 		return (-1);
 	return (0);
 }
 
-void	set_terminal()
+static void	set_terminal(struct termios term)
 {
-	g_select->term.c_lflag &= ~(ICANON | ECHO);
-	g_select->term.c_cc[VMIN] = 1;
-	g_select->term.c_cc[VTIME] = 0;
-	if (tcsetattr(2, TCSANOW, &g_select->term) == -1)
+	term.c_lflag &= ~(ICANON | ECHO);
+	term.c_cc[VMIN] = 1;
+	term.c_cc[VTIME] = 0;
+	if (tcsetattr(2, TCSANOW, &term) == -1)
 		ft_fatal("Can't init terminal conf", NULL);
 	tputs(tgetstr("ti", NULL), 1, my_outc);
 	tputs(tgetstr("vi", NULL), 1, my_outc);
 }
 
-int		init_terminal_data()
+int			init_terminal_data(t_env *env)
 {
-	char		*termtype;
+	char			*termtype;
 	int			success;
 
-	g_select = malloc(sizeof(t_select));
 	termtype = getenv ("TERM");
 	if (termtype == 0)
-		ft_fatal("Specify a terminal type with 'setenv TERM'.", NULL);
+		return (TERM_T_ERROR);
 	success = tgetent (NULL, termtype);
 	if (success < 0)
-		ft_fatal("Could not access the termcap data base.", NULL);
+		return (TERM_CAP_ERROR);
 	if (success == 0)
-		ft_fatal("Terminal type is not defined:", termtype);
-	if (tcgetattr(2, &g_select->term) == -1)
+		return (TERM_T_ND);
+	if (tcgetattr(2, &env->term) == -1)
 		return (-1);
-	set_terminal();
+	set_terminal(env->term);
 	return (1);
 }

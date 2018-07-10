@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   memory_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgaspart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/19 14:13:23 by cgaspart          #+#    #+#             */
-/*   Updated: 2018/06/19 14:15:09 by cgaspart         ###   ########.fr       */
+/*   Created: 2018/07/08 18:20:55 by cgaspart          #+#    #+#             */
+/*   Updated: 2018/07/08 18:20:57 by cgaspart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static t_env	*setup_env(int argc, char **argv)
+void	free_items(t_env *env)
 {
-	t_env		*env;
+	t_select	*buff;
 
-	env = (t_env*)malloc(sizeof(t_env));
-	env->pos = 0;
-	env->n_items = argc - 1;
-	if (setup_error(init_terminal_data(env), env) &&
-	setup_error(get_items(argc, argv, env), env))
-		return (env);
-	free_env(env);
-	return (NULL);
+	buff = env->items;
+	while (env->items)
+	{
+		free(env->items->name);
+		buff = env->items->next;
+		free(env->items);
+		env->items = buff;
+	}
 }
 
-int				main(int argc, char **argv)
+void	free_env(t_env *env)
 {
-	t_env		*env;
-
-	if ((env = setup_env(argc, argv)))
-		key_reader(env);
-	return (1);
+	if (env && env->items != NULL)
+		free_items(env);
+	if (env != NULL)
+		free(env);
 }

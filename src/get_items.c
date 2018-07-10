@@ -12,7 +12,7 @@
 
 #include "ft_select.h"
 
-int		max_item_len()
+/*int		max_item_len()
 {
 	int res;
 	int i;
@@ -26,60 +26,66 @@ int		max_item_len()
 		i++;
 	}
 	return (res);
-}
+}*/
 
-int		print_items()
+int		print_items(t_env *env)
 {
-	int i;
+	t_select		*item_ptr;
+	int			i;
 
 	i = 0;
 	ft_clear();
-	while (g_select->items[i])
+	item_ptr = env->items;
+	while (item_ptr)
 	{
-		ioctl(2, TIOCGWINSZ, &g_select->win);
-		if (g_select->selected != NULL && g_select->selected[i] == 1)
-		{
-			if (i == g_select->pos)
-				ft_ul_video(g_select->items[i]);
-			else
-				ft_video(g_select->items[i]);
-		}
-		else if (i == g_select->pos)
-			ft_ul(g_select->items[i]);
+		if (i == env->pos)
+			ft_ul(item_ptr->name);
 		else
-			ft_putstr(g_select->items[i]);
-		ft_putchar(' ');
-		i++;
-	}
-	i = 0;
-	if (g_select->selected != NULL)
-	{
-		while (i < g_select->n_items)
-		{
-			ft_putstr("| ");
-			ft_putnbr(g_select->selected[i]);
-			ft_putchar(' ');
-			i++;
-		}
+			ft_putstr(item_ptr->name);
+		item_ptr = item_ptr->next;
 	}
 	return (1);
 }
 
-int		get_items(int argc, char **argv)
+void		del_item(t_env *env)
 {
-	int i;
+	t_select	*item_ptr;
+	t_select	*tmp;
+	int		i;
 
 	i = 0;
+	item_ptr = env->items;
+	while (item_ptr->next && ++i < env->pos)
+		item_ptr = item_ptr->next;
+	if (item_ptr->next == NULL)
+		return ;
+	tmp = item_ptr->next->next;
+	free(item_ptr->next->name);
+	free(item_ptr->next);
+	item_ptr->next = tmp;
+	env->n_items--;
+}
+
+int		get_items(int argc, char **argv, t_env *env)
+{
+	int		i;
+	t_select	*item_ptr;
+
+	i = 1;
 	if (argc < 2)
-		return (0);
-	g_select->items = (char**)malloc(sizeof(char*) * argc);
-	while (i + 1 != argc)
+		return (ITEM_ERROR);
+	env->items = (t_select*)malloc(sizeof(t_select));
+	item_ptr = env->items;
+	while (i != argc)
 	{
-		g_select->items[i] = ft_strdup(argv[i + 1]);
+		item_ptr->name = ft_strdup(argv[i]);
+		((i == 1) ? (item_ptr->selected = 1) : (item_ptr->selected = 0));
 		i++;
+		if (i == argc)
+			break ;
+		item_ptr->next = (t_select*)malloc(sizeof(t_select));
+		item_ptr = item_ptr->next;
 	}
-	g_select->items[i] = NULL;
-	g_select->pos = 0;
-	g_select->n_items = ft_tablen(g_select->items);
+	item_ptr->next = NULL;
 	return (1);
 }

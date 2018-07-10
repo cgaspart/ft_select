@@ -12,19 +12,23 @@
 
 #include "ft_select.h"
 
-int		key_reader()
+int		key_reader(t_env *env)
 {
 	char		buffer[3];
-	t_env		*env;
 
-	env = init_key_func();
+	init_key_func(env);
 	while (1)
 	{
 		print_items();
 		read(1, buffer, 3);
-		if (env->key_function[(int)buffer[0]]
-			((buffer[0] == 4) ? (int)buffer[1] : (int)buffer[2]))
+		//if (((env->key_function)[(int)buffer[0]])
+		//(((buffer[0] == 4) ? (int)buffer[1] : (int)buffer[2]), env))
+		if (env->key_function[(int)buffer[0]]((int)buffer[2], env))
 			return (1);
+		if (env->pos == -1)
+				env->pos = env->n_items - 1;
+		if (env->pos == env->n_items)
+				env->pos = 0;
 	}
 	return (0);
 }
