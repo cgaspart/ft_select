@@ -39,10 +39,14 @@ int		print_items(t_env *env)
 	while (item_ptr)
 	{
 		if (i == env->pos && item_ptr->selected)
+			ft_ul_video(item_ptr->name);
+		else if (item_ptr->selected)
+			ft_video(item_ptr->name);
+		else if (i == env->pos)
 			ft_ul(item_ptr->name);
-		if (item_ptr->selected)
-			ft
+		else
 			ft_putstr(item_ptr->name);
+		ft_putchar(' ');
 		item_ptr = item_ptr->next;
 		i++;
 	}
@@ -81,7 +85,7 @@ int		get_items(int argc, char **argv, t_env *env)
 	while (i != argc)
 	{
 		item_ptr->name = ft_strdup(argv[i]);
-		((i == 1) ? (item_ptr->selected = 1) : (item_ptr->selected = 0));
+		item_ptr->selected = 0;
 		i++;
 		if (i == argc)
 			break ;

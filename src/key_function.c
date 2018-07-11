@@ -18,10 +18,9 @@ int		space_key(int buffer2, t_env *env)
 	int i;
 
 	i = 0;
-	ft_putstr("YO");
 	(void)buffer2;
 	item_ptr = env->items;
-	while (++i < env->pos)
+	while (++i <= env->pos)
 		item_ptr = item_ptr->next;
 	item_ptr->selected = !item_ptr->selected;
 	env->pos++;
