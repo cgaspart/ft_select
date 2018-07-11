@@ -21,7 +21,6 @@ static void		no_item(t_env *env)
 
 static void		term_erro(int error, t_env *env)
 {
-	term_back(env->term);
 	free_env(env);
 	if (error == TERM_T_ERROR)
 		ft_fatal("Specify a terminal type with 'setenv TERM'.\n", NULL);

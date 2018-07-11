@@ -17,6 +17,5 @@ void	ft_fatal(char *error_mess, char *this)
 	ft_putstr(error_mess);
 	if (this != NULL)
 		ft_putstr(this);
-	exit (0);
-	ft_putchar('\n');
+	exit(1);
 }

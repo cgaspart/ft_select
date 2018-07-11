@@ -15,6 +15,12 @@
 int	del_key(int buffer2, t_env *env)
 {
 	(void)buffer2;
+	if (env->n_items == 1)
+	{
+		term_back(env->term);
+		free_env(env);
+		return (1);
+	}
 	del_item(env);
 	return (0);
 }

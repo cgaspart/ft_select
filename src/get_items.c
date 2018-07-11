@@ -61,14 +61,22 @@ void		del_item(t_env *env)
 
 	i = 0;
 	item_ptr = env->items;
-	while (item_ptr->next && ++i < env->pos)
-		item_ptr = item_ptr->next;
-	if (item_ptr->next == NULL)
-		return ;
-	tmp = item_ptr->next->next;
-	free(item_ptr->next->name);
-	free(item_ptr->next);
-	item_ptr->next = tmp;
+	if (i == env->pos)
+	{
+		tmp = item_ptr->next;
+		free(item_ptr->name);
+		free(item_ptr);
+		env->items = tmp;
+	}
+	else
+	{
+		while (item_ptr->next && ++i < env->pos)
+			item_ptr = item_ptr->next;
+		tmp = item_ptr->next->next;
+		free(item_ptr->next->name);
+		free(item_ptr->next);
+		item_ptr->next = tmp;
+	}
 	env->n_items--;
 }
 
@@ -92,6 +100,7 @@ int		get_items(int argc, char **argv, t_env *env)
 		item_ptr->next = (t_select*)malloc(sizeof(t_select));
 		item_ptr = item_ptr->next;
 	}
+	env->n_items = i - 1;
 	item_ptr->next = NULL;
 	return (1);
 }

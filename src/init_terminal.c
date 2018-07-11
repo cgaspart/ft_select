@@ -12,7 +12,7 @@
 
 #include "ft_select.h"
 
-int			term_back(struct termios term)
+int				term_back(struct termios term)
 {
 	tputs(tgetstr("ve", NULL), 1, my_outc);
 	tputs(tgetstr("te", NULL), 1, my_outc);
@@ -22,7 +22,7 @@ int			term_back(struct termios term)
 	return (0);
 }
 
-static void	set_terminal(struct termios term)
+static void		set_terminal(struct termios term)
 {
 	term.c_lflag &= ~(ICANON | ECHO);
 	term.c_cc[VMIN] = 1;
@@ -33,15 +33,15 @@ static void	set_terminal(struct termios term)
 	tputs(tgetstr("vi", NULL), 1, my_outc);
 }
 
-int			init_terminal_data(t_env *env)
+int				init_terminal_data(t_env *env)
 {
 	char			*termtype;
 	int			success;
 
-	termtype = getenv ("TERM");
+	termtype = getenv("TERM");
 	if (termtype == 0)
 		return (TERM_T_ERROR);
-	success = tgetent (NULL, termtype);
+	success = tgetent(NULL, termtype);
 	if (success < 0)
 		return (TERM_CAP_ERROR);
 	if (success == 0)

@@ -38,14 +38,10 @@ int		arrow_key(int buffer2, t_env *env)
 
 int		ctrld(int buffer2, t_env *env)
 {
-	/*if (buffer2 == 91)
-	{*/
-		(void)buffer2;
-		free_env(env);
-		term_back(env->term);
-		return (1);
-	//}
-	return (0);
+	(void)buffer2;
+	free_env(env);
+	term_back(env->term);
+	return (1);
 }
 
 int		other_key(int buffer2, t_env *env)
