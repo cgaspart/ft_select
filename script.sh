@@ -1,2 +1,2 @@
-reponse=$(./ft_select)
+reponse=$(./ft_select $(ls))
 echo $reponse

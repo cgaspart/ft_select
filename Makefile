@@ -20,7 +20,7 @@ CFLAGS = -Wall -Wextra -Werror
 CC = clang
 SRC_NAME =	main.c\
 			init_terminal.c\
-			get_items.c\
+			items.c\
 			term_tools.c\
 			key_reader.c\
 			key_function.c\

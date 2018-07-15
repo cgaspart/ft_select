@@ -35,14 +35,10 @@ typedef struct			s_env
 	struct termios		term;
 	struct winsize		win;
 	int					n_items;
+		int				(*key_function[128])(int buffer2, struct s_env *env);
 	int					pos;
 	t_select				*items;
 }							t_env;
-
-typedef struct			s_key
-{
-	int					(*key_function[128])(int buffer2, t_env *env);
-}							t_key;
 
 int						init_terminal_data(t_env *env);
 int						my_outc(int c);
@@ -56,7 +52,7 @@ void						ft_ul_video(char *str);
 void						ft_clear(void);
 int						max_item_len(void);
 void						selector(int pos);
-t_key						*init_key_func(void);
+void						init_key_func(t_env *env);
 int						other_key(int buffer2, t_env *env);
 int						ctrld(int buffer2, t_env *env);
 int						arrow_key(int buffer2, t_env *env);
@@ -67,4 +63,5 @@ void						free_env(t_env *env);
 void						free_items(t_env *my_env);
 int						setup_error(int error, t_env *env);
 int						print_items(t_env *env);
+int						return_key(int buffer2, t_env *env);
 #endif

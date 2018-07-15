@@ -39,8 +39,8 @@ int		arrow_key(int buffer2, t_env *env)
 int		ctrld(int buffer2, t_env *env)
 {
 	(void)buffer2;
-	free_env(env);
 	term_back(env->term);
+	free_env(env);
 	return (1);
 }
 
@@ -51,22 +51,20 @@ int		other_key(int buffer2, t_env *env)
 	return (0);
 }
 
-t_key		*init_key_func(void)
+void	init_key_func(t_env *env)
 {
 	int		i;
-	t_key		*key_ptr;
 
 	i = 0;
-	key_ptr = (t_key*)malloc(sizeof(t_key));
 	while (i < 128)
 	{
-		key_ptr->key_function[i] = &other_key;
+		env->key_function[i] = &other_key;
 		i++;
 	}
-	key_ptr->key_function[32] = &space_key;
-	key_ptr->key_function[27] = &arrow_key;
-	key_ptr->key_function[4] = &ctrld;
-	key_ptr->key_function[127] = &del_key;
-	key_ptr->key_function[126] = &del_key;
-	return (key_ptr);
+	env->key_function[32] = &space_key;
+	env->key_function[27] = &arrow_key;
+	env->key_function[4] = &ctrld;
+	env->key_function[10] = &return_key;
+	env->key_function[127] = &del_key;
+	env->key_function[126] = &del_key;
 }
